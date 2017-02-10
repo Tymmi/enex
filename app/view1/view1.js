@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('myApp', [])
+var myAngularModule = angular.module('myApp', ['ngRoute']);
 
-.controller('myCtrl', function($scope, dataService) {
+
+myAngularModule.controller('myCtrl', function($scope, dataService) {
 
         $scope.data = null;
         dataService.getData().then(function (dataResponse) {
@@ -14,18 +15,16 @@ angular.module('myApp', [])
             $scope.data = dataResponse;
             console.log("Success------" + JSON.stringify(dataResponse))
         })
-    })
+        });
 
-.config(['$routeProvider', function($routeProvider, $httpProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'myCtrl'
-  });
+myAngularModule.config(['$httpProvider' , '$routeProvider', '$locationProvider', function($httpProvider, $routeProvider, $locationProvider, $dataServiceProvider) {
   //Enable cross domain calls
   $httpProvider.defaults.useXDomain = true;
-}])
+  $routeProvider.otherwise({redirectTo: '/view1'});
+  $locationProvider.hashPrefix('!');
+}]);
 
-.service('myCtrl', function($http) {
+myAngularModule.service('myService', function($http) {
     delete $http.defaults.headers.common['X-Requested-With'];
     this.getData = function() {
         return $http({
@@ -35,6 +34,6 @@ angular.module('myApp', [])
             params: 'limit=10, sort_by=created:desc',
             withCredentials: true,
             headers: {'Authorization': 'Basic bashe64usename:password'}
-        });
+        })
     }
-})
+});
