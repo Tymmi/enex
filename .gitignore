@@ -42,6 +42,7 @@ tmtagsHistory
 *.sublime-workspace
 .bundle
 
+# nodejs and bower
 node_modules
 dist
 .tmp
