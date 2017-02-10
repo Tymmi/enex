@@ -25,11 +25,15 @@ class BigchainInterfaceTest(unittest.TestCase):
 
         metadata = {'location': 'NL'}
 
+        msg = {
+            "asset": energy_token,
+            "metadata": metadata
+        }
+
         txid = bigDB.create_asset(
             operation="CREATE",
             signer=alice,
-            asset=energy_token,
-            metadata=metadata
+            asset=msg
         )
 
         status = bigDB.conn.transactions.status(txid)
