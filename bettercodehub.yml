@@ -1,5 +1,0 @@
-exclude:
-- /bigchaindb_driver/.*
-component_depth: 1
-languages:
-- python

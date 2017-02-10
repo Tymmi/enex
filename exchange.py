@@ -32,7 +32,6 @@ class Exchange(object):
             return False
 
         if low_sell["price"] <= high_buy["price"]:
-            print("match!")
             return True
         return False
         
@@ -40,23 +39,14 @@ class Exchange(object):
 
         buys = reversed(self.buys)
         sells = self.sells
-
-        print(self.buys)
-
-        print(sells)
-
         consumed_orders = list()
         
         for buy in buys:
-            
             if buy["rem_amount"] == 0:
                 continue
-            
             for sell in sells:
-
                 if sell["rem_amount"] == 0:
                     continue
-
                 same_amount = False
                 buy_is_zero = False
                 if buy["price"] >= sell["price"]:
@@ -74,14 +64,12 @@ class Exchange(object):
                         master["rem_amount"] -= slave["rem_amount"]
                         slave["rem_amount"] = 0
                         consumed_orders.append(slave)
-
                         if buy_is_zero:
                             break
                     else:
                         buy["rem_amount"] = 0
                         sell["rem_amount"] = 0
-                        consumed_orders.append(buy)
-                        consumed_orders.append(sell)
+                        consumed_orders.extend([buy, sell])
                         break
                 else:
                     break
@@ -101,42 +89,7 @@ class Exchange(object):
 
 
 def main():
-    ex = Exchange()
-
-    import datetime
-
-    datetime.datetime.now()
-
-
-    start = datetime.datetime.now()
-
-    print("adding sell order")
-    ex.add_order({
-        "amount": 10,
-        "price": 25.00
-    }, "sell")
-
-    print("adding buy order")
-    ex.add_order({
-        "amount": 5,
-        "price": 25.01
-    }, "buy")
-
-    stop = datetime.datetime.now()
-
-    diff = stop - start
-
-    aps = datetime.timedelta(seconds=1) / diff
-
-    print(aps)
-
-    '''
-    print("adding buy order")
-    ex.add_order({
-        "amount": 2,
-        "price": 25.01
-    }, "buy")
-    '''
+    pass
 
 
 if __name__ == "__main__":

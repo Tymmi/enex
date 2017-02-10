@@ -18,12 +18,12 @@ class BigchainConnection(object):
 
         self.conn = BigchainDB(url + ":" + str(port))
 
-    def create_asset(self, signer_key, operation, signers, asset, metadata):
+    def create_asset(self, operation, signer, asset, metadata):
 
         # Prepare transaction
         prep_tx = self.conn.transactions.prepare(
             operation=operation,
-            signers=signers,
+            signers=signer.public_key,
             asset=asset,
             metadata=metadata
         )
@@ -31,7 +31,7 @@ class BigchainConnection(object):
         print("Prepared tx")
 
         # Sign transaction
-        signed_tx = self.conn.transactions.fulfill(prep_tx, signer_key)
+        signed_tx = self.conn.transactions.fulfill(prep_tx, signer.private_key)
 
         print("Signed tx")
 
@@ -52,41 +52,7 @@ class BigchainConnection(object):
 
 
 def main():
-
-    bigDB = BigchainConnection("http://localhost", 59984)
-
-    alice, bob = BigchainUtilities.gen_random_keypair(), BigchainUtilities.gen_random_keypair()
-
-    print("ALICE: " + alice.public_key + "\t" + alice.private_key)
-    print("  BOB: " + bob.public_key + "\t" + bob.private_key)
-
-    i = 0
-    while True:
-        energy_token = {
-            'data': {
-                'kwh': {
-                    'id': str(i),
-                    'manufacturer': 'vattenfall'
-                }
-            }
-        }
-
-        i += 1
-
-        metadata = {'location': 'NL'}
-
-        if PUSHTX == True:
-            txid = bigDB.create_asset(alice.private_key,
-                operation="CREATE",
-                signers=alice.public_key,
-                asset=energy_token,
-                metadata=metadata
-            )
-            print("success: " + txid)
-
-        print("checking status")
-        status = bigDB.conn.transactions.status(txid)
-        print(status)
+    pass
 
 
 if __name__ == "__main__":
