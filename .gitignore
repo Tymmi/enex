@@ -41,3 +41,9 @@ tmtagsHistory
 *.sublime-project
 *.sublime-workspace
 .bundle
+
+node_modules
+dist
+.tmp
+.sass-cache
+bower_components
