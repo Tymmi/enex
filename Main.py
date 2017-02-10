@@ -2,9 +2,17 @@ from bigchaindb_driver import BigchainDB
 
 from utils import BigchainUtilities
 
-PUSHTX = False
+PUSHTX = True
 
 class BigchainConnection(object):
+
+    # docker run --rm -v "/storage/bigchaindb_docker:/data" -ti bigchaindb/bigchaindb -y configure rethinkdb
+
+    # docker run -v "/storage/bigchaindb_docker:/data" -d --name bigchaindb -p "58080:8080" -p "59984:9984" bigchaindb/bigchaindb start
+
+    # http://localhost:59984/api/v1/transactions/007ff51453a3a0814f47dcc6521c913c962c7cf66f90eb67f5dc8acbf05b956d
+
+    # http://localhost:58080/
 
     def __init__(self, url, port):
 
@@ -45,33 +53,41 @@ class BigchainConnection(object):
 
 def main():
 
-    bigDB = BigchainConnection("http://vanilla.ipdb.foundation", 9984)
+    bigDB = BigchainConnection("http://localhost", 59984)
 
     alice, bob = BigchainUtilities.gen_random_keypair(), BigchainUtilities.gen_random_keypair()
 
-    energy_token = {
-        'data': {
-            'kwh': {
-                'id': '0',
-                'manufacturer': 'vattenfall'
+    print("ALICE: " + alice.public_key + "\t" + alice.private_key)
+    print("  BOB: " + bob.public_key + "\t" + bob.private_key)
+
+    i = 0
+    while True:
+        energy_token = {
+            'data': {
+                'kwh': {
+                    'id': str(i),
+                    'manufacturer': 'vattenfall'
+                }
             }
         }
-    }
 
-    metadata = {'location': 'NL'}
+        i += 1
 
-    if PUSHTX == True:
-        txid = bigDB.create_asset(alice.private_key,
-            operation="CREATE",
-            signers=alice.public_key,
-            asset=energy_token,
-            metadata=metadata
-        )
-        print("success: " + txid)
+        metadata = {'location': 'NL'}
 
-    print("checking status")
-    status = bigDB.conn.transactions.status("6d527d02c7d0cea0652fb2c4adaff16548a6f3ffbcbf6fb7be7a4f7433dbd3a5")
-    print(status)
+        if PUSHTX == True:
+            txid = bigDB.create_asset(alice.private_key,
+                operation="CREATE",
+                signers=alice.public_key,
+                asset=energy_token,
+                metadata=metadata
+            )
+            print("success: " + txid)
+
+        print("checking status")
+        status = bigDB.conn.transactions.status(txid)
+        print(status)
+
 
 if __name__ == "__main__":
     main()
