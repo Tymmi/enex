@@ -28,18 +28,10 @@ class BigchainConnection(object):
             metadata=asset["metadata"]
         )
 
-        print("Prepared tx")
-
         # Sign transaction
         signed_tx = self.conn.transactions.fulfill(prep_tx, signer.private_key)
-
-        print("Signed tx")
-
         # Send transaction
         send_tx = self.conn.transactions.send(signed_tx)
-
-        print("Sent tx")
-
         # Verify and return txid if successful
         if send_tx == signed_tx:
             return signed_tx["id"]
