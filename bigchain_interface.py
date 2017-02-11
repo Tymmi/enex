@@ -18,7 +18,11 @@ class BigchainConnection(object):
 
         self.conn = BigchainDB(url + ":" + str(port))
 
-    def create_asset(self, operation, signer, asset):
+    def create_asset(self, data):
+
+        operation = data["operation"]
+        signer = data["signer"]
+        asset = data["asset"]
 
         # Prepare transaction
         prep_tx = self.conn.transactions.prepare(

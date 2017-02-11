@@ -37,11 +37,21 @@ class BigchainInterfaceTest(unittest.TestCase):
             "metadata": metadata
         }
 
+        data = {
+            "operation": "CREATE",
+            "signer": alice,
+            "asset": msg
+        }
+
+        txid = bigDB.create_asset(data)
+
+        '''
         txid = bigDB.create_asset(
             operation="CREATE",
             signer=alice,
             asset=msg
         )
+        '''
 
         status = bigDB.conn.transactions.status(txid)
         print(status)
