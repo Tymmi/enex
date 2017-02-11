@@ -25,35 +25,20 @@ class BigchainInterfaceTest(unittest.TestCase):
 
         energy_token = {
             'data': {
-                'kwh': {
-                    'id': 0xbeef,
-                    'manufacturer': 'vattenfall'
-                }
+                'id': 0,
+                'manufacturer': "Dummy",
+                'timestamp': "Dummy",
+                'source': "Dummy"
             }
-        }
-
-        metadata = {'location': 'NL'}
-
-        msg = {
-            "asset": energy_token,
-            "metadata": metadata
         }
 
         data = {
             "operation": "CREATE",
             "signer": alice,
-            "asset": msg
+            "asset": energy_token
         }
 
         txid = bcDB.create_asset(data)
-
-        '''
-        txid = bcDB.create_asset(
-            operation="CREATE",
-            signer=alice,
-            asset=msg
-        )
-        '''
 
         status = bcDB.conn.transactions.status(txid)
         print(status)

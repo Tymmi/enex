@@ -4,10 +4,11 @@ from wallet.wallet import TokenWallet
 
 class Exchange(object):
 
-    def __init__(self):
+    def __init__(self, onchain=True):
         # Setup orderbook
         self.sells = SortedListWithKey(key=(lambda x: (x['price'])))
         self.buys = SortedListWithKey(key=(lambda x: (x['price'])))
+        self.onchain = onchain
 
     def add_order(self, order, gender, wallet):
 
@@ -51,14 +52,14 @@ class Exchange(object):
                 if sell["rem_amount"] == 0:
                     continue
                 if buy["price"] >= sell["price"]:
-                    res = self._determine(buy, sell)
+                    res = self._determine(buy, sell, self.onchain)
                     consumed_orders.extend(res)
                 else:
                     break
         self._cleanup_orderbook(consumed_orders)
 
     @staticmethod
-    def _determine(buy, sell):
+    def _determine(buy, sell, onchain=True):
 
         curr_consumed_orders = list()
         same_amount = False
@@ -72,7 +73,8 @@ class Exchange(object):
         elif buy["rem_amount"] == sell["rem_amount"]:
             same_amount = True
 
-        sell["wallet"].send(slave["rem_amount"], buy["wallet"].identity)
+        if onchain:
+            sell["wallet"].send(slave["rem_amount"], buy["wallet"].identity)
 
         if not same_amount:
             master["rem_amount"] -= slave["rem_amount"]

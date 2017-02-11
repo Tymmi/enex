@@ -21,7 +21,14 @@ class ProsumerConsumerTest(unittest.TestCase):
 
         # Prosumer is producing 5 kWh
         for i in range(0,5):
-            token = EnergyToken.fetch("Vattenfall", datetime.now(), "GREEN")
+
+            data ={
+                'manufacturer': "Vattenfall",
+                'timestamp': str(datetime.now()),
+                'source': "GREEN"
+            }
+
+            token = EnergyToken.fetch(data)
             txid = prosumer.issue(token)
             print(bcDB.get_transaction(txid))
 

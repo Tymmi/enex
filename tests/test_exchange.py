@@ -6,17 +6,17 @@ from exchange.exchange import Exchange
 class MatchingTest(unittest.TestCase):
     def test(self):
 
-        ex = Exchange()
+        ex = Exchange(onchain=False)
 
         ex.add_order({
             "amount": 10,
             "price": 25.00
-        }, "sell")
+        }, "sell", None)
 
         ex.add_order({
             "amount": 5,
             "price": 25.01
-        }, "buy")
+        }, "buy", None)
 
         res = ex.sells[0]["rem_amount"]
 
@@ -33,7 +33,7 @@ class AddOrderTest(unittest.TestCase):
             "price": 20
         }
 
-        ex.add_order(order, "sell")
+        ex.add_order(order, "sell", None)
 
         self.assertEqual(ex.sells[0]["amount"], 15)
         self.assertEqual(len(ex.sells), 1)
