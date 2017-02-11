@@ -1,0 +1,5 @@
+Runs on python 3.5
+
+Needs bigchainDB server to connect to
+
+For "Proof of Concept" run the *ProsumerConsumerTest* Unit-Test
