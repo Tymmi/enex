@@ -42,30 +42,7 @@ class BigchainConnection(object):
 
         prev_tx = self.conn.transactions.retrieve(txid)
 
-        transfer_asset = {"id": None}
-        if prev_tx["operation"] == "CREATE":
-            transfer_asset["id"] = prev_tx["id"]
-        elif prev_tx["operation"] == "TRANSFER":
-            transfer_asset["id"] = prev_tx['asset']['id']
-
-        output_index = 0
-        output = prev_tx['outputs'][output_index]
-
-        transfer_input = {
-            'fulfillment': output['condition']['details'],
-            'fulfills': {
-                'output': output_index,
-                'txid': prev_tx['id'],
-            },
-            'owners_before': output['public_keys']
-        }
-
-        prepared_transfer_tx = self.conn.transactions.prepare(
-            operation="TRANSFER",
-            asset=transfer_asset,
-            inputs=transfer_input,
-            recipients=recipient.public_key
-        )
+        prepared_transfer_tx = self._craft_tx(prev_tx, recipient.public_key)
 
         fulfilled_transfer_tx = self.conn.transactions.fulfill(
             prepared_transfer_tx,
@@ -83,6 +60,27 @@ class BigchainConnection(object):
 
     def check_status(self, txid):
         return self.conn.transactions.status(txid)
+
+    def _craft_tx(self, prev_tx, recipient_pub_key):
+
+        transfer_asset = {"id": None}
+        if prev_tx["operation"] == "CREATE":
+            transfer_asset["id"] = prev_tx["id"]
+        elif prev_tx["operation"] == "TRANSFER":
+            transfer_asset["id"] = prev_tx['asset']['id']
+
+        output_index = 0
+        output = prev_tx['outputs'][output_index]
+
+        transfer_input = {
+            'fulfillment': output['condition']['details'],
+            'fulfills': {
+                'output': output_index,
+                'txid': prev_tx['id'],
+            },
+            'owners_before': output['public_keys']
+        }
+        return self.conn.transactions.prepare(operation="TRANSFER", asset=transfer_asset, inputs=transfer_input, recipients=recipient_pub_key)
 
 
 def main():
