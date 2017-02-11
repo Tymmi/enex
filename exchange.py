@@ -59,7 +59,6 @@ class Exchange(object):
 
         curr_consumed_orders = list()
         same_amount = False
-        buy_is_zero = False
 
         if buy["rem_amount"] > sell["rem_amount"]:
             master = buy
@@ -67,7 +66,6 @@ class Exchange(object):
         elif buy["rem_amount"] < sell["rem_amount"]:
             master = sell
             slave = buy
-            buy_is_zero = True
         elif buy["rem_amount"] == sell["rem_amount"]:
             same_amount = True
 
@@ -75,12 +73,11 @@ class Exchange(object):
             master["rem_amount"] -= slave["rem_amount"]
             slave["rem_amount"] = 0
             curr_consumed_orders.append(slave)
-            if buy_is_zero:
-                return []
         else:
             buy["rem_amount"] = 0
             sell["rem_amount"] = 0
             return [buy, sell]
+        return curr_consumed_orders
 
     def _cleanup_orderbook(self, orders):
 
