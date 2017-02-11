@@ -1,8 +1,15 @@
 import unittest
 
-from Main import BigchainConnection
+from bigchain_interface import BigchainConnection
 from utils import BigchainUtilities
 
+class CheckTransactionTest(unittest.TestCase):
+    def test(self):
+
+        bigDB = BigchainConnection("http://localhost", 59984)
+
+        status = bigDB.check_status("4b225cb5aa3493c91d04c3bfa37cab5b80b01c62ac8286c0596782696e219335")
+        print(status)
 
 class BigchainInterfaceTest(unittest.TestCase):
     def test(self):
