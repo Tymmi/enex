@@ -1,0 +1,1 @@
+git+git://github.com/bigchaindb/bigchaindb-driver.git@master

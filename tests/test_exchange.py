@@ -1,6 +1,6 @@
 import unittest
 
-from exchange import Exchange
+from exchange.exchange import Exchange
 
 
 class MatchingTest(unittest.TestCase):
@@ -37,3 +37,7 @@ class AddOrderTest(unittest.TestCase):
 
         self.assertEqual(ex.sells[0]["amount"], 15)
         self.assertEqual(len(ex.sells), 1)
+
+
+if __name__ == "__main__":
+    unittest.main()

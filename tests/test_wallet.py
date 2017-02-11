@@ -1,6 +1,6 @@
 import unittest
-from wallet import TokenWallet
-from bigchain_interface import BigchainInterface
+from wallet.wallet import TokenWallet
+from bigchain_interface.bigchain_interface import BigchainInterface
 from bigchaindb_driver.crypto import CryptoKeypair
 
 
@@ -13,3 +13,7 @@ class MatchingTest(unittest.TestCase):
         wallet = TokenWallet(bcDB, identity=identity)
 
         self.assertEqual(wallet.identity.private_key, "5X7WjcbQr8tbbQh6PY2r6sE6zGqNsfGRkXXPm32uUnNQ")
+
+
+if __name__ == "__main__":
+    unittest.main()

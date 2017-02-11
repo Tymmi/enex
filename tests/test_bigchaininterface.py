@@ -1,6 +1,6 @@
 import unittest
 
-from bigchain_interface import BigchainInterface
+from bigchain_interface.bigchain_interface import BigchainInterface
 from utils import BigchainUtilities
 
 
@@ -59,3 +59,7 @@ class BigchainInterfaceTest(unittest.TestCase):
         print(status)
 
         self.assertIsNotNone(status["status"])
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,8 +1,5 @@
 from bigchaindb_driver import BigchainDB
 
-from utils import BigchainUtilities
-
-PUSHTX = True
 
 class BigchainInterface(object):
 

@@ -6,7 +6,6 @@ class TokenWallet(object):
     def __init__(self, bcDB, identity=None):
 
         if identity is None:
-            print("hey")
             self.identity = BigchainUtilities.gen_random_keypair()
         else:
             self.identity = identity
