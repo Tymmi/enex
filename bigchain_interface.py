@@ -4,7 +4,7 @@ from utils import BigchainUtilities
 
 PUSHTX = True
 
-class BigchainConnection(object):
+class BigchainInterface(object):
 
     # docker run --rm -v "/storage/bigchaindb_docker:/data" -ti bigchaindb/bigchaindb -y configure rethinkdb
 
@@ -59,6 +59,9 @@ class BigchainConnection(object):
 
     def check_status(self, txid):
         return self.conn.transactions.status(txid)
+
+    def get_utxos(self, public_key):
+        return self.conn.outputs.get(public_key=public_key)
 
     def _craft_tx(self, prev_tx, recipient_pub_key):
 

@@ -1,20 +1,22 @@
 import unittest
 
-from bigchain_interface import BigchainConnection
+from bigchain_interface import BigchainInterface
 from utils import BigchainUtilities
+
 
 class CheckTransactionTest(unittest.TestCase):
     def test(self):
 
-        bigDB = BigchainConnection("http://localhost", 59984)
+        bigDB = BigchainInterface("http://localhost", 59984)
 
         status = bigDB.check_status("4b225cb5aa3493c91d04c3bfa37cab5b80b01c62ac8286c0596782696e219335")
         print(status)
 
+
 class BigchainInterfaceTest(unittest.TestCase):
     def test(self):
 
-        bigDB = BigchainConnection("http://localhost", 59984)
+        bcDB = BigchainInterface("http://localhost", 59984)
 
         alice, bob = BigchainUtilities.gen_random_keypair(), BigchainUtilities.gen_random_keypair()
 
@@ -43,17 +45,17 @@ class BigchainInterfaceTest(unittest.TestCase):
             "asset": msg
         }
 
-        txid = bigDB.create_asset(data)
+        txid = bcDB.create_asset(data)
 
         '''
-        txid = bigDB.create_asset(
+        txid = bcDB.create_asset(
             operation="CREATE",
             signer=alice,
             asset=msg
         )
         '''
 
-        status = bigDB.conn.transactions.status(txid)
+        status = bcDB.conn.transactions.status(txid)
         print(status)
 
         self.assertIsNotNone(status["status"])

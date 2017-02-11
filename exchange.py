@@ -52,7 +52,6 @@ class Exchange(object):
                     consumed_orders.extend(res)
                 else:
                     break
-
         self._cleanup_orderbook(consumed_orders)
 
     @staticmethod
