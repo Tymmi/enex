@@ -1,4 +1,5 @@
 from sortedcontainers import SortedListWithKey
+from wallet.wallet import TokenWallet
 
 
 class Exchange(object):
@@ -8,9 +9,10 @@ class Exchange(object):
         self.sells = SortedListWithKey(key=(lambda x: (x['price'])))
         self.buys = SortedListWithKey(key=(lambda x: (x['price'])))
 
-    def add_order(self, order, gender):
-        
+    def add_order(self, order, gender, wallet):
+
         order["rem_amount"] = order["amount"]
+        order["wallet"] = wallet
         
         if gender.upper() == "BUY":
             self.buys.add(order)
@@ -21,6 +23,7 @@ class Exchange(object):
 
         # invoke match
         if self.delegate_match():
+            print("match!")
             self.execute_match()
 
     def delegate_match(self):
@@ -68,6 +71,8 @@ class Exchange(object):
             slave = buy
         elif buy["rem_amount"] == sell["rem_amount"]:
             same_amount = True
+
+        sell["wallet"].send(slave["rem_amount"], buy["wallet"].identity)
 
         if not same_amount:
             master["rem_amount"] -= slave["rem_amount"]
