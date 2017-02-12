@@ -75,6 +75,7 @@ class Exchange(object):
 
         try:
             sell["wallet"].send(slave["rem_amount"], buy["wallet"].identity)
+            # buy["wallet"].send(slave["rem_amount"], sell["wallet"].identity)
         except:
             pass
 

@@ -7,16 +7,15 @@ from utils import BigchainUtilities
 class CheckTransactionTest(unittest.TestCase):
     def test(self):
 
-        bigDB = BigchainInterface("http://localhost", 59984)
+        bc_db = BigchainInterface("http://kyber.ipdb.foundation", 80)
 
-        status = bigDB.check_status("4b225cb5aa3493c91d04c3bfa37cab5b80b01c62ac8286c0596782696e219335")
-        print(status)
+        #status = bc_db.check_status("4b225cb5aa3493c91d04c3bfa37cab5b80b01c62ac8286c0596782696e219335")
+        #print(status)
 
 
 class BigchainInterfaceTest(unittest.TestCase):
     def test(self):
-
-        bcDB = BigchainInterface("http://localhost", 59984)
+        bc_db = BigchainInterface("http://kyber.ipdb.foundation", 80)
 
         alice, bob = BigchainUtilities.gen_random_keypair(), BigchainUtilities.gen_random_keypair()
 
@@ -38,9 +37,9 @@ class BigchainInterfaceTest(unittest.TestCase):
             "asset": energy_token
         }
 
-        txid = bcDB.create_asset(data)
+        txid = bc_db.create_asset(data)
 
-        status = bcDB.conn.transactions.status(txid)
+        status = bc_db.conn.transactions.status(txid, headers=None)
         print(status)
 
         self.assertIsNotNone(status["status"])

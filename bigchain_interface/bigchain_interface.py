@@ -19,7 +19,7 @@ class BigchainInterface(object):
         asset = data["asset"]
 
         # Prepare transaction
-        prep_tx = self.conn.transactions.prepare(operation=operation,signers=signer.public_key,asset=asset,metadata=None)
+        prep_tx = self.conn.transactions.prepare(operation=operation,signers=signer.public_key,asset=asset,metadata={"dummy": "dummy"})
         # Sign transaction
         signed_tx = self.conn.transactions.fulfill(prep_tx, signer.private_key)
         # Send transaction

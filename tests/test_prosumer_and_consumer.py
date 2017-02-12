@@ -10,13 +10,13 @@ import unittest
 class ProsumerConsumerTest(unittest.TestCase):
     def test(self):
         #BigchainDB and Exchange instantiated
-        bcDB = BigchainInterface("http://localhost", 59984)
+        bc_db = BigchainInterface("http://kyber.ipdb.foundation", 80)
         exchange = Exchange()
 
 
         # Two users exist
-        prosumer = TokenWallet(bcDB)
-        consumer = TokenWallet(bcDB)
+        prosumer = TokenWallet(bc_db)
+        consumer = TokenWallet(bc_db)
 
 
         # Prosumer is producing 5 kWh
@@ -30,7 +30,7 @@ class ProsumerConsumerTest(unittest.TestCase):
 
             token = EnergyToken.fetch(data)
             txid = prosumer.issue(token)
-            print(bcDB.get_transaction(txid))
+            print(bc_db.get_transaction(txid))
 
         time.sleep(1)
 

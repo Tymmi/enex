@@ -1,4 +1,5 @@
 import unittest
+import datetime
 
 from exchange.exchange import Exchange
 
@@ -8,19 +9,30 @@ class MatchingTest(unittest.TestCase):
 
         ex = Exchange(onchain=False)
 
-        ex.add_order({
-            "amount": 10,
-            "price": 25.00
-        }, "sell", None)
+        start = datetime.datetime.now()
+        end = datetime.datetime.now()
+        count = 0
 
-        ex.add_order({
-            "amount": 5,
-            "price": 25.01
-        }, "buy", None)
+        while end - start < datetime.timedelta(seconds=10):
 
-        res = ex.sells[0]["rem_amount"]
+            ex.add_order({
+                "amount": 10,
+                "price": 25.00
+            }, "sell", None)
 
-        self.assertEqual(res, 5)
+            ex.add_order({
+                "amount": 5,
+                "price": 25.01
+            }, "buy", None)
+
+            count += 1
+            end = datetime.datetime.now()
+
+            res = ex.sells[0]["rem_amount"]
+
+        print(count/10)
+
+        #self.assertEqual(res, 5)
 
 
 class AddOrderTest(unittest.TestCase):

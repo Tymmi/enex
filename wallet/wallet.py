@@ -3,14 +3,14 @@ from utils import BigchainUtilities
 
 class TokenWallet(object):
 
-    def __init__(self, bcDB, identity=None):
+    def __init__(self, bc_db, identity=None):
 
         if identity is None:
             self.identity = BigchainUtilities.gen_random_keypair()
         else:
             self.identity = identity
         print("New wallet:\t", self.identity.public_key, self.identity.private_key)
-        self.bc_interface = bcDB
+        self.bc_interface = bc_db
 
         self.utxos = list()
         self.utxos.extend(self.bc_interface.get_utxos(self.identity.public_key))
@@ -29,7 +29,7 @@ class TokenWallet(object):
         txid = self.bc_interface.create_asset(data)
         status = self.bc_interface.check_status(txid)
 
-        if status["status"] != "valid" or status["status"] != "backlog":
+        if status["status"] == "valid" or status["status"] == "backlog":
             self.utxos.extend([txid])
             return txid
         else:
