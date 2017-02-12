@@ -9,24 +9,180 @@
   <title>My AngularJS App</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="">
+  <link href='css/bootstrap.min.css' rel='stylesheet'>
+  <link href='css/bootstrap-theme.min.css' rel='stylesheet'>
   <script src="bower_components/angular/angular.js"></script>
-  <script src=""></script>
+  <script type='text/javascript' src='js/bootstrap.min.js'></script>
+  <script type='text/javascript' src='js/jquery-1.10.2.min.js'></script>
+
 
 </head>
-<body>
-<h1>Awesome Energy Blockchain Hackathon App of the Year</h1>
 
-<div ng-controller = myCtrl>
-<p>{{myService.getData}}</p>
+<body ng-controller="myCtrl as ctrl">
+<div class="container">
+<div class="row">
+  <div class="col-sm-8">
+    <div class="col-sm-3"
+    <img src="../data/logo.png" height="150" width="150">
+  </div>
+  <div class="col-sm-3"><p>           </p></div>
+    <h1><img src="../data/logo.png" height="150" width="150">P2P Energy Trading Platform</h1>
+
 </div>
+  <div class="col-sm-3">
+    <p>
+      <button type="button" class="btn btn-default btn-sm">
+        <span class="glyphicon glyphicon-user"></span> My Account
+      </button>
+    </p>
+  </div>
+<div class="col-sm-3">
+ <p>
+    <button type="button" class="btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-log-in"></span> My Energy Wallet
+    </button>
+  </p>
+</div>
+
+  <div class="col-sm-3">
+  <p>
+    <button type="button" class="btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-resize-small"></span> API
+    </button>
+  </p>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="col-xs-6">
+  <h2> Buy Energy Token</h2>
+  <table class ="table table-bordered">
+    <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Price</th>
+      <th>Volume Total</th>
+      <th>Volume Remaining</th>
+      <th>Volume Min</th>
+      <th>Time</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tr>
+
+      <th>{{ctrl.data.data[0].orderID}}</th>
+
+      <th>{{ctrl.data.data[0].price}}</th>
+      <th>{{ctrl.data.data[0].volEntered}}</th>
+      <th>{{ctrl.data.data[0].volRemaining}}</th>
+      <th>{{ctrl.data.data[0].minVolume}}</th>
+
+      <th>{{ctrl.data.data[0].created}}</th>
+      <th><a  class="btn  btn-danger  btn-lg"  href="#"> Buy</a></th>
+
+    </tr>
+  <tr>
+
+    <th>{{ctrl.data.data[1].orderID}}</th>
+
+    <th>{{ctrl.data.data[1].price}}</th>
+    <th>{{ctrl.data.data[1].volEntered}}</th>
+    <th>{{ctrl.data.data[1].volRemaining}}</th>
+    <th>{{ctrl.data.data[1].minVolume}}</th>
+
+    <th>{{ctrl.data.data[1].created}}</th>
+    <th><a  class="btn  btn-danger  btn-lg"  href="#"> Buy</a></th>
+  </tr>
+  </table>
+</div>
+<div class="col-xs-6">
+  <h2> Sell Energy Token</h2>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Price</th>
+      <th>Volume Total</th>
+      <th>Volume Remaining</th>
+      <th>Volume Min</th>
+      <th>Time</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tr>
+
+
+      <th>{{ctrl.data.data[0].orderID}}</th>
+
+      <th>{{ctrl.data.data[0].price}}</th>
+      <th>{{ctrl.data.data[0].volEntered}}</th>
+      <th>{{ctrl.data.data[0].volRemaining}}</th>
+      <th>{{ctrl.data.data[0].minVolume}}</th>
+
+      <th>{{ctrl.data.data[0].created}}</th>
+      <th><a  class="btn  btn-danger  btn-lg"  href="#"> Sell</a></th>
+
+    </tr>
+    <tr>
+
+      <th>{{ctrl.data.data[1].orderID}}</th>
+
+      <th>{{ctrl.data.data[1].price}}</th>
+      <th>{{ctrl.data.data[1].volEntered}}</th>
+      <th>{{ctrl.data.data[1].volRemaining}}</th>
+      <th>{{ctrl.data.data[1].minVolume}}</th>
+
+      <th>{{ctrl.data.data[1].created}}</th>
+      <th><a  class="btn  btn-danger  btn-lg"  href="#"> Sell</a></th>
+    </tr>
+  </table>
+</div>
+
+<h2> The Energy Blockchain </h2>
+<table class ="table table-bordered">
+  <thead>
+  <tr>
+    <th>Transaction ID</th>
+    <th>Sender</th>
+    <th>Receiver</th>
+    <th>Volume</th>
+
+    <th>Time</th>
+  </tr>
+  </thead>
+  <tr>
+
+    <th>{{ctrl.data.data[0].orderID}}</th>
+
+    <th>{{ctrl.data.data[0].price}}</th>
+    <th>{{ctrl.data.data[0].volEntered}}</th>
+
+    <th>{{ctrl.data.data[0].minVolume}}</th>
+
+    <th>{{ctrl.data.data[0].created}}</th>
+
+  </tr>
+  <tr>
+
+    <th>{{ctrl.data.data[1].orderID}}</th>
+
+    <th>{{ctrl.data.data[1].price}}</th>
+    <th>{{ctrl.data.data[1].volEntered}}</th>
+
+    <th>{{ctrl.data.data[1].minVolume}}</th>
+
+    <th>{{ctrl.data.data[1].created}}</th>
+  </tr>
+</table>
+
+<!--JSON object cut into pieces disply -->
+
+
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <div ng-view></div>
-
-  <div>Angular seed app: v<span app-version></span></div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
